@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
 final myTheme = ThemeData.dark().copyWith(
-  accentColor: Colors.greenAccent
+  accentColor: Colors.lightBlue,
+  primaryColor: Colors.blueAccent[700]
 );

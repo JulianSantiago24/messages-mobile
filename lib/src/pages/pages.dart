@@ -1,16 +1,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_messages/src/pages/messages_page.dart';
+import 'package:flutter_app_messages/src/services/services.dart';
 import 'package:provider/provider.dart';
 
 class TabsPage extends StatelessWidget {
 
+  
+
   @override
   Widget build(BuildContext context) {
+
+    final postsService = Provider.of<PostsService>(context);
+
+    
     return ChangeNotifierProvider(
       create: (_) =>new _NavigationModel(),
       child: Scaffold(
-        body: _Pages(),
+        body: (postsService.messages.length == 0)
+          ? Center(child: CircularProgressIndicator(),)
+          : _Pages(),  
         bottomNavigationBar: _Navigation(),
       ),
     );
@@ -25,12 +34,14 @@ class _Navigation extends StatelessWidget {
     final navigationModel = Provider.of<_NavigationModel>(context);
 
     return BottomNavigationBar(
-      backgroundColor: Colors.white10,
+      backgroundColor: Theme.of(context).accentColor,
+      selectedItemColor: Colors.black,
       currentIndex: navigationModel.actualPage,
+      selectedFontSize: 15.0,
       onTap: (i) => navigationModel.actualPage = i,
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Messages' ),
-        BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites' )
+        BottomNavigationBarItem(icon: Icon(Icons.list_outlined), label: 'Messages' ),
+        BottomNavigationBarItem(icon: Icon(Icons.star_outline), label: 'Favorites' )
       ]
     );
   }

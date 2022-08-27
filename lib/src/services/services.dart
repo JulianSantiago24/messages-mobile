@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_messages/src/models/comments_model.dart';
 import 'package:flutter_app_messages/src/models/posts_model.dart';
 import 'package:http/http.dart' as http;
 
 // ignore: non_constant_identifier_names
-final _URL= 'jsonplaceholder.typicode.com';
+final _URL = 'jsonplaceholder.typicode.com';
 
 class PostsService with ChangeNotifier {
 
@@ -20,6 +21,26 @@ class PostsService with ChangeNotifier {
     final postsResponse = postsResponseFromJson( response.body );
 
     this.messages.addAll( postsResponse );
+    notifyListeners();
+  
+  }
+}
+
+class CommentsService with ChangeNotifier {
+
+  List<CommentsResponse> comments = [];
+
+  // ignore: non_constant_identifier_names
+  CommentsService() {
+    this.getComments();
+  }
+
+  getComments( ) async {
+    final url = Uri.https( _URL, '/posts/1/comments' );
+    final response = await http.get(url);
+    final commentsResponse = commentsResponseFromJson( response.body );
+
+    this.comments.addAll( commentsResponse );
     notifyListeners();
   
   }
