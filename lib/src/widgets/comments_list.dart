@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_messages/src/models/comments_model.dart';
+import 'package:flutter_app_messages/src/services/services.dart';
+import 'package:provider/provider.dart';
 
 
 
-class CommentsList extends StatelessWidget {
+class CommentsList extends StatefulWidget {
 
   final List<CommentsResponse> comments;
   
   const CommentsList(this.comments);
 
+  @override
+  _CommentsListState createState() => _CommentsListState();
+}
+
+class _CommentsListState extends State<CommentsList> {
+  
+  
   @override
   Widget build(BuildContext context) {
     
@@ -16,8 +25,8 @@ class CommentsList extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 5.0),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: this.comments.length,
-      itemBuilder: (BuildContext context, int index) {
+      itemCount: this.widget.comments.length,
+      itemBuilder: (BuildContext context, int index ) {
         //return Text(this.messages[index].userId.toString());
         return Container(
           padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5, top: 5),
@@ -37,7 +46,7 @@ class CommentsList extends StatelessWidget {
                   CircleAvatar(
                     radius: 16.0,
                     child: Text(
-                      this.comments[index].email.characters.first,
+                      this.widget.comments[index].email.characters.first,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -46,11 +55,11 @@ class CommentsList extends StatelessWidget {
                     backgroundColor: Theme.of(context).accentColor,
                   ),
                   SizedBox(width: 10.0),
-                  Text(this.comments[index].email),
+                  Text(this.widget.comments[index].email),
                 ],
               ),
               SizedBox(height: 10.0),
-              Text('${this.comments[index].body[0].toUpperCase()}${this.comments[index].body.substring(1)}'),
+              Text('${this.widget.comments[index].body[0].toUpperCase()}${this.widget.comments[index].body.substring(1)}'),
               SizedBox(height: 10.0),
             ],
           )

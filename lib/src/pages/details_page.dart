@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_messages/src/pages/messages_page.dart';
 import 'package:flutter_app_messages/src/services/services.dart';
 import 'package:flutter_app_messages/src/widgets/comments_list.dart';
 import 'package:provider/provider.dart';
 
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
 
   final String title;
   final String description;
@@ -15,7 +16,13 @@ class DetailsPage extends StatelessWidget {
     this.description,
     this.id,
   });
- 
+
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  
   @override
   Widget build(BuildContext context) {
 
@@ -23,6 +30,11 @@ class DetailsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          } ),
         backgroundColor: Theme.of(context).accentColor,
         title: Text('DETAILS'),
         centerTitle: true,
@@ -35,12 +47,12 @@ class DetailsPage extends StatelessWidget {
       ),
       body: (commentsService.comments.length == 0)
         ? Center(child: CircularProgressIndicator(),)
-        : _Body(title: title, description: description, id: id, commentsService: commentsService),
+        : _Body(title: widget.title, description: widget.description, id: widget.id, commentsService: commentsService),
     );
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends StatefulWidget {
 
   const _Body({
     Key key,
@@ -56,7 +68,15 @@ class _Body extends StatelessWidget {
   final CommentsService commentsService;
 
   @override
+  __BodyState createState() => __BodyState();
+}
+
+class __BodyState extends State<_Body> {
+
+  
+  @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.only(left: 30.0, right: 30.0),
       child: Container(
@@ -65,15 +85,15 @@ class _Body extends StatelessWidget {
           children: [
             SizedBox(height: 30.0),
             Text('TITLE', style: TextStyle(color: Theme.of(context).accentColor)),
-            Text(this.title),
+            Text(this.widget.title),
             SizedBox(height: 10.0),
             Text('DESCRIPTION', style: TextStyle(color: Theme.of(context).accentColor)),
-            Text(this.description, textAlign: TextAlign.justify),
-            Text('ID ${this.id.toString()}'),
+            Text(this.widget.description, textAlign: TextAlign.justify),
+            Text('ID ${this.widget.id.toString()}'),
             SizedBox(height: 30.0),
             Text('COMMENTS', style: TextStyle(color: Theme.of(context).accentColor),),
             SizedBox(height: 20.0),
-            Expanded(child: CommentsList(commentsService.comments)),
+            Expanded(child: CommentsList(widget.commentsService.comments)),
           ],
         )
       ),

@@ -9,6 +9,7 @@ final _URL = 'jsonplaceholder.typicode.com';
 class PostsService with ChangeNotifier {
 
   List<PostsResponse> messages = [];
+  List<int> ids = [];
 
   // ignore: non_constant_identifier_names
   PostsService() {
@@ -21,9 +22,14 @@ class PostsService with ChangeNotifier {
     final postsResponse = postsResponseFromJson( response.body );
 
     this.messages.addAll( postsResponse );
+    messages.forEach((element) {
+     this.ids.add(element.id);
+    });
     notifyListeners();
   
   }
+
+
 }
 
 class CommentsService with ChangeNotifier {
@@ -31,12 +37,13 @@ class CommentsService with ChangeNotifier {
   List<CommentsResponse> comments = [];
 
   // ignore: non_constant_identifier_names
-  CommentsService() {
-    this.getComments();
+  CommentsService( int value ) {
+    this.getComments(value);
   }
 
-  getComments( ) async {
-    final url = Uri.https( _URL, '/posts/1/comments' );
+  getComments( int value ) async {
+    
+    final url = Uri.https( _URL, '/posts/$value/comments' );
     final response = await http.get(url);
     final commentsResponse = commentsResponseFromJson( response.body );
 

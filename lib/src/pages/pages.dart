@@ -1,13 +1,17 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_messages/src/pages/favorites_page.dart';
 import 'package:flutter_app_messages/src/pages/messages_page.dart';
 import 'package:flutter_app_messages/src/services/services.dart';
 import 'package:provider/provider.dart';
 
-class TabsPage extends StatelessWidget {
+class TabsPage extends StatefulWidget {
 
-  
+  @override
+  _TabsPageState createState() => _TabsPageState();
+}
 
+class _TabsPageState extends State<TabsPage> {
   @override
   Widget build(BuildContext context) {
 
@@ -15,7 +19,7 @@ class TabsPage extends StatelessWidget {
 
     
     return ChangeNotifierProvider(
-      create: (_) =>new _NavigationModel(),
+      create: (_) =>new _NavigationPages(),
       child: Scaffold(
         body: (postsService.messages.length == 0)
           ? Center(child: CircularProgressIndicator(),)
@@ -26,19 +30,24 @@ class TabsPage extends StatelessWidget {
   }
 }
 
-class _Navigation extends StatelessWidget {
+class _Navigation extends StatefulWidget {
 
+  @override
+  __NavigationState createState() => __NavigationState();
+}
+
+class __NavigationState extends State<_Navigation> {
   @override
   Widget build(BuildContext context) {
 
-    final navigationModel = Provider.of<_NavigationModel>(context);
+    final navigationPages = Provider.of<_NavigationPages>(context);
 
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).accentColor,
       selectedItemColor: Colors.black,
-      currentIndex: navigationModel.actualPage,
+      currentIndex: navigationPages.actualPage,
       selectedFontSize: 15.0,
-      onTap: (i) => navigationModel.actualPage = i,
+      onTap: (i) => navigationPages.actualPage = i,
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.list_outlined), label: 'Messages' ),
         BottomNavigationBarItem(icon: Icon(Icons.star_outline), label: 'Favorites' )
@@ -47,12 +56,17 @@ class _Navigation extends StatelessWidget {
   }
 }
 
-class _Pages extends StatelessWidget {
+class _Pages extends StatefulWidget {
 
+  @override
+  __PagesState createState() => __PagesState();
+}
+
+class __PagesState extends State<_Pages> {
   @override
   Widget build(BuildContext context) {
 
-    final navigationModel = Provider.of<_NavigationModel>(context);
+    final navigationModel = Provider.of<_NavigationPages>(context);
 
     return Center(
       child: PageView(
@@ -60,18 +74,15 @@ class _Pages extends StatelessWidget {
         //physics: BouncingScrollPhysics(),
         physics: NeverScrollableScrollPhysics(),
         children: [
-       
           MessagesPage(),
-          Container(
-            color: Colors.green
-          )
+          FavoritesPage()
         ],
       )
     );
   }
 }
 
-class _NavigationModel with ChangeNotifier{
+class _NavigationPages with ChangeNotifier{
   
   int _actualPage = 0;
   PageController _pageController = new PageController(initialPage: 0);
