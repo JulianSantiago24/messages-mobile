@@ -4,7 +4,6 @@ import 'package:flutter_app_messages/src/services/services.dart';
 import 'package:provider/provider.dart';
 
 
-
 class CommentsList extends StatefulWidget {
 
   final List<CommentsResponse> comments;
@@ -20,12 +19,17 @@ class _CommentsListState extends State<CommentsList> {
   
   @override
   Widget build(BuildContext context) {
+
+    final commentsService = Provider.of<CommentsService>(context);
+    final postsService = Provider.of<PostsService>(context);
+
+    commentsService.getComments(postsService.ids.single);
     
     return ListView.builder(
       padding: EdgeInsets.symmetric(vertical: 5.0),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: this.widget.comments.length,
+      itemCount: commentsService.comments.length,
       itemBuilder: (BuildContext context, int index ) {
         //return Text(this.messages[index].userId.toString());
         return Container(
@@ -46,7 +50,7 @@ class _CommentsListState extends State<CommentsList> {
                   CircleAvatar(
                     radius: 16.0,
                     child: Text(
-                      this.widget.comments[index].email.characters.first,
+                      commentsService.comments[index].email.characters.first,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -55,11 +59,14 @@ class _CommentsListState extends State<CommentsList> {
                     backgroundColor: Theme.of(context).accentColor,
                   ),
                   SizedBox(width: 10.0),
-                  Text(this.widget.comments[index].email),
+                  Text(commentsService.comments[index].email),
                 ],
               ),
               SizedBox(height: 10.0),
-              Text('${this.widget.comments[index].body[0].toUpperCase()}${this.widget.comments[index].body.substring(1)}'),
+              Text(
+                '${commentsService.comments[index].body[0].toUpperCase()}${commentsService.comments[index].body.substring(1)}',
+                textAlign: TextAlign.start,
+              ),
               SizedBox(height: 10.0),
             ],
           )

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_messages/src/pages/messages_page.dart';
 import 'package:flutter_app_messages/src/services/services.dart';
 import 'package:flutter_app_messages/src/widgets/comments_list.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +22,8 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   
+
+ 
   @override
   Widget build(BuildContext context) {
 
@@ -33,8 +34,12 @@ class _DetailsPageState extends State<DetailsPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
+            //postsService.messages.clear();
+            commentsService.comments.clear();
+            commentsService.notifyListeners();                        
             Navigator.pop(context);
-          } ),
+          } 
+        ),
         backgroundColor: Theme.of(context).accentColor,
         title: Text('DETAILS'),
         centerTitle: true,
@@ -45,59 +50,30 @@ class _DetailsPageState extends State<DetailsPage> {
               bottomLeft: Radius.circular(25)),
         ),
       ),
-      body: (commentsService.comments.length == 0)
-        ? Center(child: CircularProgressIndicator(),)
-        : _Body(title: widget.title, description: widget.description, id: widget.id, commentsService: commentsService),
-    );
-  }
-}
-
-class _Body extends StatefulWidget {
-
-  const _Body({
-    Key key,
-    @required this.title,
-    @required this.description,
-    @required this.id,
-    @required this.commentsService,
-  }) : super(key: key);
-
-  final String title;
-  final String description;
-  final int id;
-  final CommentsService commentsService;
-
-  @override
-  __BodyState createState() => __BodyState();
-}
-
-class __BodyState extends State<_Body> {
-
-  
-  @override
-  Widget build(BuildContext context) {
-
-    return Container(
-      margin: EdgeInsets.only(left: 30.0, right: 30.0),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 30.0),
-            Text('TITLE', style: TextStyle(color: Theme.of(context).accentColor)),
-            Text(this.widget.title),
-            SizedBox(height: 10.0),
-            Text('DESCRIPTION', style: TextStyle(color: Theme.of(context).accentColor)),
-            Text(this.widget.description, textAlign: TextAlign.justify),
-            Text('ID ${this.widget.id.toString()}'),
-            SizedBox(height: 30.0),
-            Text('COMMENTS', style: TextStyle(color: Theme.of(context).accentColor),),
-            SizedBox(height: 20.0),
-            Expanded(child: CommentsList(widget.commentsService.comments)),
-          ],
+        body: Container(
+          margin: EdgeInsets.only(left: 30.0, right: 30.0),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 30.0),
+                Text('TITLE', style: TextStyle(color: Theme.of(context).accentColor)),
+                Text(this.widget.title),
+                SizedBox(height: 10.0),
+                Text('DESCRIPTION', style: TextStyle(color: Theme.of(context).accentColor)),
+                Text(this.widget.description, textAlign: TextAlign.justify),
+                Text('ID ${this.widget.id.toString()}'),
+                SizedBox(height: 30.0),
+                Text('COMMENTS', style: TextStyle(color: Theme.of(context).accentColor),),
+                SizedBox(height: 20.0),
+                Expanded(child: CommentsList(commentsService.comments)),
+              ],
+            )
+          ),
         )
-      ),
     );
   }
 }
+
+
 

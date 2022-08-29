@@ -56,7 +56,10 @@ class _MessagesListState extends State<MessagesList> {
               ),
             ),
             onDismissed: (direction) {
-              this.widget.messages.removeAt(index);
+              //this.widget.messages.removeAt(index);
+              setState(() {
+                this.widget.messages.removeAt(index);
+              });
             },
             child: Container(
               padding: const EdgeInsets.all(30),

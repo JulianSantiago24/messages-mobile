@@ -25,6 +25,7 @@ class PostsService with ChangeNotifier {
     messages.forEach((element) {
      this.ids.add(element.id);
     });
+    
     notifyListeners();
   
   }
