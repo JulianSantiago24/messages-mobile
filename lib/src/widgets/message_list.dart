@@ -94,7 +94,6 @@ class _MessagesListState extends State<MessagesList> {
                           setState(() {
                             this.widget.messages[index].isFavorite  = true;               
                           });
-                          print('Configurar como favorito');
                         }
                       ),
                       IconButton(
@@ -109,7 +108,6 @@ class _MessagesListState extends State<MessagesList> {
                             )
                             )            
                           );
-                          print('ir a detalles');
                           postsService.ids.clear();
                           postsService.ids.add(this.widget.messages[index].id);                          
                         }
