@@ -1,16 +1,74 @@
-# flutter_app_messages
+# Flutter APP - List of Messages with Details
 
-A new Flutter project.
+This is a project to list the messages obtained from the JSONPlaceholder API, in your experience you will have a HomePage to configure the theme of your preference (Dark/Light), once obtained the list of messages you can perform different actions on them, among which are set as favorite and view details of the message, among others.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## How to Use 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+**Step 1:**
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Download or clone this repo
+
+**Step 2:**
+
+Go to project root and execute the following command in console to get the required dependencies: 
+
+```
+flutter pub get 
+```
+
+**Step 3:**
+
+Go to project root and execute the following command in console to create directroy:
+
+```
+flutter create .
+```
+
+**Step 4:**
+
+Launch preferred emulator
+
+**Step 5:**
+
+Go to project root and execute the following command in console to run the APP:
+
+```
+flutter run
+```
+
+
+### Flutter Version
+
+```
+Flutter 2.0.4 • channel stable • https://github.com/flutter/flutter.git
+```
+
+
+### Folder Structure
+
+Here is the folder structure we have been using in this project
+
+Note: Models and user interfaces were implemented here, with the provider pattern to manage states. However, it has many improvement options to implement architectures and patterns that can complement this first work done.
+
+```
+lib/
+|- main.dart
+|- src/
+  |- models/
+  |- pages/
+  |- services/
+  |- theme/
+  |- widgets/
+```
+
+
+Made with ❤ by JulianJaramillo
+
+
+
+
+
+
